@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cadastro Prefeitura de São Leo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <script>
+        async function salvar() {
+            const response = await fetch(
+                "http://localhost:3333/users",
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/php"
+                    },
+                }
+            )
+        }
+    </script>
+</head>
+
+<!-- ############################### -->
+
+<body>
+    <Header>
+        <nav class="navbar bg-light ">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="images\LogoSL.jpeg" alt="Logo" width="120" height="80"
+                        class="d-inline-block align-text-top">
+
+                </a>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="header container ">
+                            <h1>Cadastro Social de Famílias</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </Header>
+    <div id="fundo">
+
+
+        <div class="container">
+            <div class="row">
+                <div id="header" class="container">
+                    <h3>Informações Responsável da Família</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dados -->
+        <div id="container" class="container mt-3">
+            <form action="/action_page.php">
+                <div class="row">
+                    <div class="col p-2 ">
+                        <input id="nome" type="text" class="form-control" placeholder="Nome Completo"
+                            aria-label="Nome Completo " required />
+                    </div>
+
+                    <div class="col p-2 ">
+                        <input id="cpf" type="number" class="form-control" placeholder="CPF" aria-label="CPF"
+                            required />
+                            
+                            <div id="resultado" ></div>
+                    </div>
+                    <div class="col p-2 ">
+                        <input Id="dtNasc" type="text" class="form-control" placeholder="Data de Nascimento"
+                            aria-label="Data de Nascimento" required />
+                    </div>
+                </div>
+
+            </form>
+            <!-- <form action="/users" method="get"> -->
+            <div class="row">
+
+                <div class="col p-2 ">
+                    <select Id="sexo" class="form-select form-control " aria-label=".form-select-sm example">
+                        <option selected>Sexo</option>
+                        <option value="1">Masculino</option>
+                        <option value="2">Feminino</option>
+                        <option value="3">Prefiro não informar</option>
+                    </select>
+                </div>
+                <div class="col p-2 ">
+                    <input Id="telefone" type="number" class="form-control" placeholder="Telefone" aria-label="Telefone"
+                        required />
+                </div>
+                <div id="disability-form" class="col p-2 ">
+                    <select Id="hasDisability" class="form-select form-control " aria-label=".form-select-sm example">
+                        <option selected id="hasDisability">PCD</option>
+                        <option value="sim">Sim</option>
+                        <option value="nao">Não</option>
+                    </select>
+                    
+                </div>
+                <div id="disabilityTypes" style="display: none;">
+
+                    <div class="col p-2 bg-light form-control">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" Id="fisica">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Física
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" Id="visual">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Visual
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" Id="auditiva">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Auditiva
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" name="intelectual">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Intelectual
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" name="multipla">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Deficiência múltipla
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col p-2 was-validated">
+                    <input id="numero" type="number" class="form-control" placeholder="N° pessoas na família"
+                        aria-label="N° pessoas na família" />
+                </div>
+
+            </div>
+
+<!-- ########################## COMPOSIÇÃO FAMILIAR ################################################ -->
+            <div id="formularios"></div>
+        </div>
+        </form>
+
+<!-- ############################# ENDEREÇO ################### -->
+        <div Id="container" class="container mt-3">
+            <div class="container">
+                <div class="row">
+                    <div Id="header" class="container">
+                        <h3>Endereço</h3>
+                    </div>
+                </div>
+            </div>
+            <form action="/action_page.php">
+                <div class="row">
+                    <div class="col p-2 ">
+                        <input Id="cep" type="text" class="form-control" placeholder="CEP " aria-label="CEP"
+                            onblur="pesquisacep(this.value);" />
+                    </div>
+                    <div class="col p-2 ">
+                        <input Id="rua" type="text" class="form-control" placeholder="Rua " aria-label="Rua" />
+                    </div>
+                    <div class="col p-2 ">
+                        <input Id="numero" type="number" class="form-control" placeholder="Número "
+                            aria-label="Número" />
+                    </div>
+
+            </form>
+            <form action="/action_page.php">
+                <div class="row">
+                    <div class="col p-2 ">
+                        <input Id="bairro" type="text" class="form-control" placeholder="Bairro" aria-label="Bairro" />
+                    </div>
+                    <div class="col p-2 ">
+                        <input Id="cidade" type="text" class="form-control" placeholder="Cidade" aria-label="cidade" />
+                    </div>
+                    <div class="col p-2 ">
+                        <input Id="uf" type="text" class="form-control" placeholder="Estado" aria-label="uf" />
+                    </div>
+
+                    <div class="col p-2 ">
+                        <input Id="comp" type="text" class="form-control" placeholder="Complemento"
+                            aria-label="Complemento  " />
+                    </div>
+                </div>
+            </form>
+
+
+            <!-- ############################# Situação residencial ################### -->
+            <div Id="container" class="container mt-3 ">
+                <div class="container">
+                    <div class="row">
+                        <div Id="header" class="container">
+                            <h3>Situação residencial</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- Caixas de seleção -->
+                <div class="col p-2 bg-light form-control">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" Id="danosResidencia">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Danos na residência (destelhamento, alagamento, desabamento)
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" Id="perdasPessoais">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Perda de itens pessoais (roupas, sapatos, etc)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" Id="bensMateriais">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Perda de bens materiais (Móveis e eltrodomésticos)
+                        </label>
+                    </div>
+                    <br>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" name="defesaCivil">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Aceita receber ALERTAS da defesa civil?
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- Lançamento de Notas -->
+
+        <div id=button class="d-grid gap-2">
+            <button class="btn btn-primary" type="button">Salvar</button>
+            <button class="btn btn-primary" type="button">Limpar</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+
+    <script src="scripts.js"></script>
+
+</body>
+
+</html>
